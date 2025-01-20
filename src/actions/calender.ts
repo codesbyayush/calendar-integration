@@ -6,7 +6,7 @@ import { auth } from '@/auth'
 
 export async function getCalendarEvents(props: { startDate?: string, endDate?: string, pageToken?: string }) {
     try {
-        const session: Session & { accessToken: string } | null = await auth();
+        const session = await auth();
         if (!session?.accessToken) {
             throw new Error("Access token is missing");
         }

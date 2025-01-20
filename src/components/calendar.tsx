@@ -164,22 +164,31 @@ export function Calendar() {
             <>
               <EventTable events={events} page={currentPage} />
               <Pagination className="mt-4">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
-                      disabled={currentPage === 0}
-                    />
-                  </PaginationItem>
+                <PaginationContent><PaginationItem>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
+                    disabled={currentPage === 0}
+                  >
+                    Previous
+                  </Button>
+                </PaginationItem>
                   {[...Array(totalPages)].map((_, index) => (
                     <PaginationItem key={index}>
-                      <PaginationLink onClick={() => setCurrentPage(index)} isActive={currentPage === index}>
+                      <Button
+                        variant={currentPage === index ? "secondary" : "outline"}
+                        size="sm"
+                        onClick={() => setCurrentPage(index)}
+                      >
                         {index + 1}
-                      </PaginationLink>
+                      </Button>
                     </PaginationItem>
                   ))}
                   <PaginationItem>
-                    <PaginationNext
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => {
                         if (currentPage < totalPages - 1) {
                           setCurrentPage((prev) => prev + 1)
@@ -188,7 +197,9 @@ export function Calendar() {
                         }
                       }}
                       disabled={!nextAvailable && currentPage === totalPages - 1}
-                    />
+                    >
+                      Next
+                    </Button>
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>

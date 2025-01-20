@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { GoogleCalendarEvent } from '@/lib/mock-data'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -23,7 +22,7 @@ import { CalendarIcon } from 'lucide-react'
 import { cn } from "@/lib/utils"
 
 interface EventFormProps {
-  onSubmit: (event: GoogleCalendarEvent) => void
+  onSubmit: (event: any) => void
   onCancel: () => void
 }
 
@@ -37,7 +36,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (start && end) {
-      const newEvent: GoogleCalendarEvent = {
+      const newEvent = {
         id: Date.now().toString(),
         title,
         start,
