@@ -35,6 +35,9 @@ export function Calendar() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [nextAvailable, setNextAvailable] = useState<boolean>(false)
 
+  const totalPages = Math.ceil(events.length / MAX_PAGE_SIZE)
+
+
   async function fetchDataForDateRange() {
     setIsLoading(true)
     const params: any = {
@@ -73,8 +76,11 @@ export function Calendar() {
     try {
       const { events: newEvents, nextPageToken: newNextPageToken, hasNext } = await getCalendarEvents(params)
       setEvents((prev) => [...prev, ...newEvents])
-      setPageToken(newNextPageToken || null)
-      setCurrentPage((prev) => prev + 1)
+      setPageToken(newNextPageToken || null);
+      const newTotalPages = Math.ceil((events.length + newEvents.length) / MAX_PAGE_SIZE)
+      if (currentPage !== newTotalPages - 1) {
+        setCurrentPage((prev) => prev + 1)
+      }
       setNextAvailable(hasNext)
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -99,7 +105,6 @@ export function Calendar() {
     fetchDataForDateRange()
   }, [dateRange])
 
-  const totalPages = Math.ceil(events.length / MAX_PAGE_SIZE)
 
   return (
     <div className="container mx-auto p-4 space-y-4">
